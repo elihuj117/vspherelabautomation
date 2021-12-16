@@ -1,0 +1,9 @@
+---
+- name: Configure the VCSA
+  hosts: localhost
+  become: yes
+  gather_facts: no
+  roles:
+
+  - name: Configure the vCenter Server
+    role: vcsa

@@ -51,6 +51,7 @@ resource "vsphere_virtual_machine" "esxi_host" {
   wait_for_guest_net_timeout = 0
   guest_id = "vmkernel65Guest"
   nested_hv_enabled =true
+  
   network_interface {
     network_id     = "${data.vsphere_network.mgmt_lan_0.id}"
     adapter_type   = "vmxnet3"

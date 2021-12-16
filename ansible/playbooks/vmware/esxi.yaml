@@ -1,0 +1,9 @@
+---
+- name: Create and Build ESXi
+  hosts: localhost
+  become: yes
+  gather_facts: no
+  roles:
+
+  - name: Create and Build an ESXi Host
+    role: esxi

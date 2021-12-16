@@ -1,0 +1,85 @@
+---
+- name: Create working directory
+  file:
+    path: /tmp
+    state: directory
+
+- name: Copy ISO files to /tmp
+  copy:
+    src: esxi
+    dest: /tmp/{{ esxi_hostname }}
+
+- name: Get the ISO ready for deployment
+  shell: |
+    mv /tmp/{{ esxi_hostname }}/esxi/* /tmp/{{ esxi_hostname }}
+    rm -rf /tmp/{{ esxi_hostname }}/esxi
+    mkdir /tmp/{{ esxi_hostname }}/efi
+    mkdir -p /tmp/temp/{{ esxi_hostname }}/etc/vmware/weasel
+    mv /tmp/{{ esxi_hostname }}/boot.cfg /tmp/{{ esxi_hostname }}/boot.cfg.old
+    mv /tmp/{{ esxi_hostname }}/efi/boot/boot.cfg /tmp/{{ esxi_hostname }}/efi/boot/boot.cfg.old
+
+- name: Copy custom boot.cfg
+  copy:
+    src: boot.cfg
+    dest: /tmp/{{ esxi_hostname }}
+
+- name: Copy custom UEFI boot.cfg
+  copy:
+    src: efi/boot.cfg
+    dest: /tmp/{{ esxi_hostname }}/efi/boot
+
+- name: Create Kickstart file
+  copy:
+    force: true
+    dest: /tmp/temp/{{ esxi_hostname }}/etc/vmware/weasel/ks.cfg
+    content: |
+      accepteula
+      rootpw {{ root_password }}
+      clearpart --firstdisk=local --overwritevmfs
+      install --firstdisk=local --overwritevmfs
+      network --bootproto=dhcp --device=vmnic1 --addvmportgroup=0
+      reboot
+      %firstboot --interpreter=busybox
+      esxcli network vswitch standard uplink add -u vmnic1 -v vSwitch0
+      esxcli network vswitch standard portgroup add -p "VM Network" -v {{ vsswitch_name }}
+      esxcli network vswitch standard portgroup set -p "Management Network" --vlan-id {{ host_management_vlan }}
+      esxcli network ip interface ipv4 set --interface-name=vmk0 --ipv4={{ host_management_ip }} --netmask={{ netmask }} --gateway={{ gateway }} --type=static
+      esxcfg-route -a default {{ gateway }}
+      esxcli network ip dns server add --server={{ nameserver }}
+      esxcli network ip set --ipv6-enabled=0
+      vim-cmd hostsvc/datastore/rename datastore1 "ESXI_LOCAL"
+      vim-cmd hostsvc/enable_esx_shell
+      vim-cmd hostsvc/start_esx_shell
+      reboot
+
+- name: Create Kickstart Tarball
+  shell: |
+    chmod ugo+x /tmp/temp/{{ esxi_hostname }}/etc/vmware/weasel/ks.cfg
+    cd /tmp/temp/{{ esxi_hostname }}
+    tar czvf bmks.tgz *
+    chmod ugo+x /tmp/temp/{{ esxi_hostname }}/bmks.tgz
+    cp /tmp/temp/{{ esxi_hostname }}/bmks.tgz /tmp/{{ esxi_hostname }}/
+
+- name: Create bootable ISO
+  shell: >
+    mkisofs
+    -relaxed-filenames
+    -J
+    -R
+    -b isolinux.bin
+    -c boot.cat
+    -no-emul-boot
+    -boot-load-size 4
+    -boot-info-table
+    -eltorito-alt-boot
+    -e efiboot.img
+    -boot-load-size 1
+    -no-emul-boot
+    -o /tmp/{{ esxi_hostname }}.iso /tmp/{{ esxi_hostname }}/
+
+- name: Copy ISO to ESXi Host
+  shell: |
+    scp -i {{ roles_path }}/files/id_rsa /tmp/{{ esxi_hostname }}.iso root@{{ esxi_host }}:/vmfs/volumes/{{ esxi_datastore }}
+
+- name: Build the host with Terraform
+  include_tasks: exec_tf.yaml

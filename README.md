@@ -5,7 +5,7 @@ This is a collection of artifacts to recreate my vSphere homelab in an automated
 Components included:
 
 - [x] VCSA
-- [x] ESXi hosts
+- [x] ESXi host
 - [ ] Shared Storage
 - [ ] NSX-T
 

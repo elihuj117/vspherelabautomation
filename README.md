@@ -22,7 +22,7 @@ For the appliance, I'm importing the default embedded_vCSA_on_ESXi.json template
 
 Here are the tasks performed by Terraform:
 
-- Create DNS A records for ESXi host, and VCSA using Terraform
+- Create DNS A records for ESXi host, and VCSA
 - Execute CLI installer using answer file
 - Deploy VCSA
 

@@ -24,11 +24,11 @@ data "template_file" "default" {
 
 resource "local_file" "rendered" {
     content     = "${data.template_file.default.rendered}"
-    filename = "/opt/terraform/vcsa/modules/vcsabuild/files/vcsatemplate_rendered.json"
+    filename = "/opt/git/vspherelabautomation/terraform/vcsa/modules/vcsabuild/files/vcsatemplate_rendered.json"
 }
 
 resource "null_resource" "vc" {
   provisioner "local-exec" {
-    command = "/opt/terraform/vcsa/modules/vcsabuild/files/vcsa-cli-installer/lin64/vcsa-deploy install --accept-eula --acknowledge-ceip --no-ssl-certificate-verification /opt/terraform/vcsa/modules/vcsabuild/files/vcsatemplate_rendered.json"
+    command = "/opt/git/vspherelabautomation/terraform/vcsa/modules/vcsabuild/files/vcsa-cli-installer/lin64/vcsa-deploy install --accept-eula --acknowledge-ceip --no-ssl-certificate-verification /opt/terraform/vcsa/modules/vcsabuild/files/vcsatemplate_rendered.json"
   }
 }

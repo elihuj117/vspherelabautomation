@@ -1,3 +1,0 @@
----
-- name: Create the ESXi ISO
-  include_tasks: create_iso.yaml

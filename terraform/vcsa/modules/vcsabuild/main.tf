@@ -1,5 +1,5 @@
 data "template_file" "default" {
-  template = "${file("/opt/terraform/vcsa/modules/vcsabuild/files/vcsatemplate.json")}"
+  template = "${file("/opt/git/vspherelabautomation/terraform/vcsa/modules/vcsabuild/files/vcsatemplate.json")}"
 
   vars = {
     esxi_hostname = "${var.esxi_hostname}"

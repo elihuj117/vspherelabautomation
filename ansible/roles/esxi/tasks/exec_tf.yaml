@@ -2,7 +2,7 @@
 - name: Initialize Terraform
   shell: /usr/local/bin/terraform init
   args:
-    chdir: /opt/terraform/esxi/
+    chdir: /opt/git/vspherelabautomation/terraform/esxi/
 
 - name: Apply Terraform
   block:

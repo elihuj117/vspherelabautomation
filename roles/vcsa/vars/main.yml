@@ -1,0 +1,34 @@
+---
+vcsa_hostname: vcsa.test.lab.local
+vcsa_username: administrator@test.local
+vcsa_password: VMware1234!5678!
+datacenter_name: Test-DC
+cluster_name: Test-Cluster
+dvswitch_name: Test-dVS
+dvuplinks_name: Test-dVS-DVUplinks
+evc_mode: intel-sandybridge
+vmk_mgmt_pg: dvpg_VLAN200-vConsole
+vmk_pg_mgmt_vlan: "200"
+vmk_trust_pg: dvpg_VLAN200-vTrust
+vmk_trust_pg_vlan: "200"
+vmk_vmotion_pg: dvpg_VLAN201-vMotion
+vmk_vmotion_pg_vlan: "201"
+vmk_vsan_pg: dvpg_VLAN202-vSAN
+vmk_vsan_pg_vlan: "202"
+vmk_iscsia_pg: dvpg_VLAN203-iSCSI-A
+vmk_iscsia_pg_vlan: "203"
+vmk_iscsib_pg: dvpg_VLAN204-iSCSI-B
+vmk_iscsib_pg_vlan: "204"
+vmk_nfs_pg: dvpg_VLAN205-NFS
+vmk_nfs_pg_vlan: "205"
+vmk_tep_pg: dvpg_VLAN206-TEP
+vmk_tep_pg_vlan: "206"
+vmk_uplink1_pg: dvpg_VLAN400-Uplink1
+vmk_uplink1_pg_vlan: "400"
+vmk_uplink2_pg: dvpg_VLAN401-Uplink2
+vmk_uplink2_pg_vlan: "401"
+vm_folders:
+  - Development
+  - Management
+  - Templates
+  - vRealize

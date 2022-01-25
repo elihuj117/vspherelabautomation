@@ -1,0 +1,39 @@
+---
+esxi_hostname: esxi.test.lab.local
+host_management_ip: 192.168.31.235
+host_management_vlan: 200
+vsswitch_name: vSwitch0
+datacenter_name: Test-DC
+cluster_name: Test-Cluster
+netmask: 255.255.255.0
+gateway: 192.168.31.1
+nameserver: 192.168.31.10
+root_password: VMware123!
+esxi_host: 192.168.31.126
+esxi_username: root
+esxi_password: VMware123!
+esxi_datastore: ESX01_LOCALHDD_01/ISO/
+roles_path: /opt/ansible/roles/esxi
+vcsa_hostname: vcsa.test.lab.local
+vcsa_username: 'administrator@test.local'
+vcsa_password: 'VMware1234!5678!'
+dvswitch_name: Test-dVS
+vmk_mgmt_pg: dvpg_VLAN200-vConsole
+vmk_mgmt_ip: 192.168.31.235
+vmk_trust_pg: dvpg_VLAN200-vTrust
+vmk_vmotion_pg: dvpg_VLAN201-vMotion
+vmk_vmotion_ip: 192.168.32.235
+vmk_vsan_pg: dvpg_VLAN202-vSAN
+vmk_vsan_ip: 192.168.33.235
+vmk_iscsia_pg: dvpg_VLAN203-iSCSI-A
+vmk_iscsia_ip: 192.168.34.235
+vmk_iscsib_pg: dvpg_VLAN204-iSCSI-B
+vmk_iscsib_ip: 192.168.35.235
+vmk_nfs_pg: dvpg_VLAN205-NFS
+vmk_nfs_ip: 192.168.36.235
+vmk_tep_pg: dvpg_VLAN206-TEP
+vmk_uplink1_pg: dvpg_VLAN400-Uplink1
+vmk_uplink1_ip:
+vmk_uplink2_pg: dvpg_VLAN401-Uplink2
+vmk_uplink2_ip:
+ntp_server: tick.usno.navy.mil

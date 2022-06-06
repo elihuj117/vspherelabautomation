@@ -29,6 +29,6 @@ resource "local_file" "rendered" {
 
 resource "null_resource" "vc" {
   provisioner "local-exec" {
-    command = "/opt/git/vspherelabautomation/terraform/vcsa/modules/vcsabuild/files/vcsa-cli-installer/lin64/vcsa-deploy install --accept-eula --acknowledge-ceip --no-ssl-certificate-verification /opt/terraform/vcsa/modules/vcsabuild/files/vcsatemplate_rendered.json"
+    command = "/opt/git/vspherelabautomation/terraform/vcsa/modules/vcsabuild/files/vcsa-cli-installer/lin64/vcsa-deploy install --accept-eula --acknowledge-ceip --no-ssl-certificate-verification /opt/git/vspherelabautomation/terraform/vcsa/modules/vcsabuild/files/vcsatemplate_rendered.json"
   }
 }
